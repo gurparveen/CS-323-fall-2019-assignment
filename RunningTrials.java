@@ -1,5 +1,5 @@
 /**
- * Running Trials Author: Gurparveen Kaur Chaha and Carolyn Yao
+ * Running Trials Author: Gurparveen Kaur Chahal and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  * yes
  */

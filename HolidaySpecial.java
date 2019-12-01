@@ -1,6 +1,6 @@
 /**
  * HolidaySpecial
- * Author: Your Name and Carolyn Yao
+ * Author: Gurparveen Kaur Chahal and Carolyn Yao
  * Does this compile or finish running within 5 seconds? Y/N
  */
 
@@ -37,8 +37,81 @@ public class HolidaySpecial {
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numCooks + 1][numSteps + 1];
 
-    // Your code here
+                                             ///////////////////////
+    
+                    long sTime= System.nanoTime(); // starting time
+                    
+                    int finishedSteps[] = new int[numSteps + 1];
+                    int stepsLeft = 0;
+                                 for (int i = 1; i < finishedSteps.length; i++)
+                                        {
+                                             finishedSteps[i] = 0;
+                                             stepsLeft++;
+                                        }
+                                 
+                                       /*******Algorithm starts********/
+                                       
+                int seq = 0, counter = 0, pastStep = 0, maximumCount = 0, mainKitchencook = 0, mainKitchencookCount = 0,
+        finalStep = 0, pastCook = 0, mainCookStart = 0, mainCookSeq = 0 ;
+                
+                        while (stepsLeft > 0) {      // Checking for last step
+                            for(int a = 1; a <= numCooks; a++)
+                            {
+                                        for(int b = 1; b < signUpTable[a].length; b++)
+                            {
+                        pastStep = signUpTable[a][b-1]; // checking past step
+          if(pastStep == 0) {
+            counter = 0; //reseting counter
+            seq++;  // counting steps 
+          }
+                            if(finishedSteps[b] == 0 && signUpTable[a][b] == 1) {// Count number of steps a cook can do connsectively
+            counter++;
+            if(maximumCount <= counter)//maximumCount tells maximum consecutive steps current cook can do
+            {
+              maximumCount = counter;
+              finalStep = b+1;
+            }
+          }
+        }
+        
+        if(mainKitchencookCount < maximumCount)//picking main cook that can do maximum consective steps
+        {
+          mainKitchencookCount = maximumCount;
+          mainKitchencook = a;
+          mainCookSeq = seq;
+          mainCookStart = finalStep - mainKitchencookCount;
+        }else if(mainKitchencookCount == maximumCount && mainCookSeq >= seq)
+        {
+          mainKitchencookCount = maximumCount;
+          mainKitchencook = a;
+          mainCookSeq = seq;
+          mainCookStart = finalStep - mainKitchencookCount;
+        } 
+        counter = 0; // reset counter
+          seq = 0;
+          maximumCount = 0;
+      }
+      if (pastCook != mainKitchencook){ // assigning main cook
+          for(int i = mainCookStart; i < mainCookStart + mainKitchencookCount; i++)
+          {
+            if(signUpTable[mainKitchencook][i] == 1)
+            {
+              finishedSteps[i] = 1;
+              scheduleTable[mainKitchencook][i] = 1;
+            }
+          }
+          stepsLeft = mainKitchencookCount--; // Leaving steps done by Main cook 
+                mainKitchencookCount = 0;  // resetting cook counter 
+        mainKitchencook = 0;
+      }
+      pastCook = mainKitchencook;
 
+    }
+
+    System.out.println("Total Runtime is: " +((System.nanoTime()- sTime)) + " nanoseconds");
+   
+                                        //////////////////////
+    
     return scheduleTable;
   }
 
